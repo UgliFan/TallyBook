@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'pages/home.dart';
 import 'pages/create.dart';
 import 'pages/search.dart';
-import 'package:amap_location/amap_location.dart';
 
 void main() {
-    AMapLocationClient.setApiKey('7009610864addb3a7841226c78ccf517');
     runApp(new TallyBookApp());
 }
 
@@ -41,16 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
             index: _currentTabIndex
         );
-    }
-    @override
-    void initState() {
-        AMapLocationClient.startup(new AMapLocationOption(desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters));
-        super.initState();
-    }
-    @override
-    void dispose() {
-        AMapLocationClient.shutdown();
-        super.dispose();
     }
     @override
     Widget build(BuildContext context) {
