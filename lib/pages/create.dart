@@ -89,6 +89,7 @@ class CreatePageState extends State<CreatePage> {
     }
     @override
     void initState() {
+        AMapLocationClient.setApiKey('7009610864addb3a7841226c78ccf517');
         AMapLocationClient.startup(new AMapLocationOption(desiredAccuracy:CLLocationAccuracy.kCLLocationAccuracyHundredMeters));
         getLocationStr();
         _date = _getFormatDate(new DateTime.now());
