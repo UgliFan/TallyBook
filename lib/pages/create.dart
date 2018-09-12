@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:amap_location/amap_location.dart';
 
 class CreatePage extends StatefulWidget {
     @override
@@ -8,6 +9,9 @@ class CreatePage extends StatefulWidget {
 }
 
 class CreatePageState extends State<CreatePage> {
+    String _loc;
+    double latitude = 0.0;
+    double longtude = 0.0;
     String _getFormatDate(DateTime date) {
         int year = date.year;
         String month = date.month.toString();
@@ -21,32 +25,37 @@ class CreatePageState extends State<CreatePage> {
         return '$year-$month-$day $min:$sec';
     }
     String _date = '';
-    String _location = '不明';
     Widget _getBody(BuildContext ctx) {
         List<Widget> children = [
             Row(
                 children: <Widget>[
-                    Text('时间: $_date'),
-                    CupertinoButton(
-                        child: Text('修改', style: TextStyle(fontSize: 14.0)),
+                    IconButton(
+                        color: Colors.blue,
+                        icon: Icon(Icons.timer),
                         onPressed: () {
                             DatePicker.showDateTimePicker(ctx, onConfirm: (date) {
                                 setState(() {
                                     _date = _getFormatDate(date);
                                 });
                             }, currentTime: DateTime.now(), locale: 'zh');
-                        }
-                    )
+                        },
+                    ),
+                    Text('时间: $_date')
                 ]
             ),
             Row(
                 children: <Widget>[
-                    Text('地点: ', style: TextStyle(fontSize: 14.0)),
                     IconButton(
+                        color: Colors.blue,
                         icon: Icon(Icons.my_location),
                         onPressed: () {
-                            print(_location);
+                            getLocationStr();
                         },
+                    ),
+                    Flexible(
+                        child: Column(
+                            children: <Widget>[Text('地址:$_loc', style: TextStyle(fontSize: 14.0))]
+                        )
                     )
                 ],
             )
@@ -58,9 +67,41 @@ class CreatePageState extends State<CreatePage> {
             ),
         );
     }
+    void getLocationStr() async {
+        AMapLocation loc = await AMapLocationClient.getLocation(true);
+        String info;
+        if (loc == null) {
+            info = '正在定位...';
+        } else if (loc.isSuccess()) {
+            if (loc.hasAddress()) {
+                info = '${loc.formattedAddress}'; // 城市:${loc.city} 省:${loc.province}
+            } else {
+                info = '不详';
+            }
+            latitude = loc.latitude;
+            longtude = loc.longitude;
+        } else {
+            info = '定位失败(错误:{code=${loc.code},description=${loc.description})';
+        }
+        setState(() {
+            _loc = info;
+        });
+    }
+    @override
+    void initState() {
+        AMapLocationClient.startup(new AMapLocationOption(desiredAccuracy:CLLocationAccuracy.kCLLocationAccuracyHundredMeters));
+        getLocationStr();
+        _date = _getFormatDate(new DateTime.now());
+        super.initState();
+    }
+    @override
+    void dispose() {
+        AMapLocationClient.stopLocation();
+        AMapLocationClient.shutdown();
+        super.dispose();
+    }
     @override
     Widget build(BuildContext context) {
-        _date = _getFormatDate(DateTime.now());
         return new Scaffold(
             appBar: new CupertinoNavigationBar(
                 middle: new Text('记一笔'),
