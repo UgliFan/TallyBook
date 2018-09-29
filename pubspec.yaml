@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_datetime_picker: ^1.0.1
   amap_location: ^0.1.1
+  camera: ^0.2.3
 
 
 dev_dependencies:

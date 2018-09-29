@@ -36,6 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.3"
   charcode:
     dependency: transitive
     description:
@@ -78,13 +85,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.2"
-  easy_alert:
-    dependency: transitive
-    description:
-      name: easy_alert
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -291,13 +291,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.2+4"
-  simple_permissions:
-    dependency: transitive
-    description:
-      name: simple_permissions
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.6"
   sky_engine:
     dependency: transitive
     description: flutter

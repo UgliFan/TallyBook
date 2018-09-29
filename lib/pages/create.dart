@@ -9,6 +9,7 @@ class CreatePage extends StatefulWidget {
 }
 
 class CreatePageState extends State<CreatePage> {
+    TextEditingController _controller = new TextEditingController();
     String _loc;
     double latitude = 0.0;
     double longtude = 0.0;
@@ -58,6 +59,15 @@ class CreatePageState extends State<CreatePage> {
                         )
                     )
                 ],
+            ),
+            TextField(
+                decoration: InputDecoration(
+                    border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(const Radius.circular(10.0))
+                    ),
+                    hintText: 'Please enter a search term'
+                ),
+                controller: _controller
             )
         ];
         return Container(
@@ -68,24 +78,28 @@ class CreatePageState extends State<CreatePage> {
         );
     }
     void getLocationStr() async {
-        AMapLocation loc = await AMapLocationClient.getLocation(true);
-        String info;
-        if (loc == null) {
-            info = '正在定位...';
-        } else if (loc.isSuccess()) {
-            if (loc.hasAddress()) {
-                info = '${loc.formattedAddress}'; // 城市:${loc.city} 省:${loc.province}
+        try {
+            AMapLocation loc = await AMapLocationClient.getLocation(true);
+            String info;
+            if (loc == null) {
+                info = '正在定位...';
+            } else if (loc.isSuccess()) {
+                if (loc.hasAddress()) {
+                    info = '${loc.formattedAddress}'; // 城市:${loc.city} 省:${loc.province}
+                } else {
+                    info = '不详';
+                }
+                latitude = loc.latitude;
+                longtude = loc.longitude;
             } else {
-                info = '不详';
+                info = '定位失败(错误:{code=${loc.code},description=${loc.description})';
             }
-            latitude = loc.latitude;
-            longtude = loc.longitude;
-        } else {
-            info = '定位失败(错误:{code=${loc.code},description=${loc.description})';
+            setState(() {
+                _loc = info;
+            });
+        } catch (e) {
+            print(e.toString());
         }
-        setState(() {
-            _loc = info;
-        });
     }
     @override
     void initState() {
