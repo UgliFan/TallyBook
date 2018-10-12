@@ -5,7 +5,10 @@ class HomePage extends StatefulWidget {
     State<StatefulWidget> createState() => new _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
+    @override
+    bool get wantKeepAlive => true;
+
     @override
     Widget build(BuildContext context) {
         return new Center(

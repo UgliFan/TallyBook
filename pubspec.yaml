@@ -10,7 +10,10 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_datetime_picker: ^1.0.1
   amap_location: ^0.1.1
-  camera: ^0.2.3
+  flutter_spinkit: ^2.1.0
+  flutter_redux: ^0.5.2
+  json_annotation: ^1.2.0
+  json_serializable: ^1.5.1
 
 
 dev_dependencies:
@@ -59,3 +62,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  assets:
+    - static/images/default_face.jpg
