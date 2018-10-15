@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tally_book/pages/TabBarBottomPage.dart';
+import 'package:tally_book/pages/TabBarPage.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tally_book/redux/TBKState.dart';
@@ -21,7 +21,7 @@ class TallyBookApp extends StatelessWidget {
                     primaryColor: Colors.black,
                     buttonColor: Colors.white
                 ),
-                home: new TabBarBottomPage()
+                home: new TabBarPage()
             )
         );
     }

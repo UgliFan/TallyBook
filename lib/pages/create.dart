@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:amap_location/amap_location.dart';
 
 class CreatePage extends StatefulWidget {
     @override

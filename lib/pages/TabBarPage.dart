@@ -5,21 +5,30 @@ import 'package:tally_book/pages/search.dart';
 import 'package:tally_book/pages/mine.dart';
 import 'package:tally_book/pages/CreatePage.dart';
 
-class TabBarBottomPage extends StatefulWidget {
+class TabBarPage extends StatefulWidget {
     @override
-    _TabBarBottomPageState createState() => _TabBarBottomPageState();
+    _TabBarPageState createState() => _TabBarPageState();
 }
 
-class _TabBarBottomPageState extends State<TabBarBottomPage> {
+class _TabBarPageState extends State<TabBarPage> {
     final PageController topPageControl = new PageController();
     final List<String> tab = ['首页', '回顾', '我的'];
     int currentTab = 0;
 
+    Widget _getTabIcon(index) {
+        if (index == 0) {
+            return new Icon(Icons.home, size: 24.0);
+        } else if (index == 1) {
+            return new Icon(Icons.search, size: 24.0);
+        } else {
+            return new Icon(Icons.account_circle, size: 24.0);
+        }
+    }
     _renderTab() {
         List<BottomNavigationBarItem> list = new List();
         for (int i = 0; i < tab.length; i++) {
             list.add(new BottomNavigationBarItem(
-                icon: new Icon(Icons.home),
+                icon: _getTabIcon(i),
                 title: new Text(
                     tab[i],
                     maxLines: 1,
