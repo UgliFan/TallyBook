@@ -4,6 +4,7 @@ import 'package:tally_book/pages/home.dart';
 import 'package:tally_book/pages/search.dart';
 import 'package:tally_book/pages/mine.dart';
 import 'package:tally_book/pages/CreatePage.dart';
+import 'package:tally_book/pages/TBKWebView.dart';
 
 class TabBarPage extends StatefulWidget {
     @override
@@ -50,6 +51,7 @@ class _TabBarPageState extends State<TabBarPage> {
     @override
     Widget build(BuildContext context) {
         return new TBKTabBar(
+            headerLeftPage: new TBKWebView('https://www.baidu.com', 'WebView'),
             headerRightPage: new CreatePage(),
             tabIndex: currentTab,
             tabItems: _renderTab(),

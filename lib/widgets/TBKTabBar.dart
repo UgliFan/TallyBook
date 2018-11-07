@@ -6,12 +6,14 @@ class TBKTabBar extends StatefulWidget {
     final List<Widget> tabViews;
     final String title;
     final int tabIndex;
+    final Widget headerLeftPage;
     final Widget headerRightPage;
     final PageController topPageControl;
     final ValueChanged<int> onPageChanged;
     final ValueChanged<int> onTabChanged;
     TBKTabBar({
         Key key,
+        this.headerLeftPage,
         this.headerRightPage,
         this.tabIndex,
         this.tabItems,
@@ -65,6 +67,12 @@ class _TBKTabBarState extends State<TBKTabBar> with SingleTickerProviderStateMix
             appBar: new CupertinoNavigationBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 middle: new Text(widget.title, style: new TextStyle(color: Colors.white)),
+                leading: new GestureDetector(
+                    child: new Icon(Icons.network_cell),
+                    onTap: () {
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (context) => widget.headerLeftPage));
+                    },
+                ),
                 trailing: new GestureDetector(
                     child: new Icon(Icons.add, color: Colors.orange),
                     onTap: () {

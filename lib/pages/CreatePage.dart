@@ -13,6 +13,8 @@ class CreatePageState extends State<CreatePage> with AutomaticKeepAliveClientMix
     String _date = '';
     String _summary = '';
     int _radioGroupValue = 0;
+    int _selectedTypeIndex = 1;
+    final List typeEnum = ['收入', '支出'];
     final TextEditingController summaryController = new TextEditingController();
     @override
     bool get wantKeepAlive => true;
@@ -93,8 +95,66 @@ class CreatePageState extends State<CreatePage> with AutomaticKeepAliveClientMix
                                 controller: summaryController
                             )
                         )
+                    ]),
+                    _buildCard(ctx, [
+                        new IconButton(
+                            color: Colors.blue,
+                            icon: new Icon(Icons.timer),
+                            onPressed: () async {
+                                await showModalBottomSheet<void>(
+                                    context: ctx,
+                                    builder: (BuildContext context) {
+                                        return _buildTypePicker(context);
+                                    }
+                                );
+                                print(_selectedTypeIndex);
+                            }
+                        ),
+                        new GestureDetector(
+                            onTap: () async {
+                                await showModalBottomSheet<void>(
+                                    context: ctx,
+                                    builder: (BuildContext context) {
+                                        return _buildTypePicker(context);
+                                    }
+                                );
+                            },
+                            child: new Text(typeEnum[_selectedTypeIndex])
+                        )
                     ])
                 ]
+            )
+        );
+    }
+
+    Widget _buildTypePicker(BuildContext context) {
+        final FixedExtentScrollController scrollController = new FixedExtentScrollController(initialItem: _selectedTypeIndex);
+        return new Container(
+            height: 200.0,
+            color: CupertinoColors.white,
+            child: new DefaultTextStyle(
+                style: const TextStyle(
+                    color: CupertinoColors.black,
+                    fontSize: 22.0
+                ),
+                child: new SafeArea(
+                    child: new CupertinoPicker(
+                        scrollController: scrollController,
+                        diameterRatio: 2.0,
+                        itemExtent: 40.0,
+                        backgroundColor: CupertinoColors.white,
+                        children: new List<Widget>.generate(typeEnum.length, (int index) {
+                            return new Center(
+                                child: new Text(typeEnum[index])
+                            );
+                        }),
+                        onSelectedItemChanged: (int index) {
+                            setState(() {
+                                _selectedTypeIndex = index;
+                            });
+                        },
+                    )
+                )
             )
         );
     }
